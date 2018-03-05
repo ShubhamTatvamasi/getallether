@@ -31,7 +31,7 @@ function getBalance(address) {
   })
 }
 
-// Get the Ether balance of the coinbase account from the metamask
+// Send Ethers to etherReceiver account from coinbase account
 function sendBalance(transactionObject) {
   return web3.eth.sendTransaction(transactionObject, function (error, result) {
     if (!error) {
