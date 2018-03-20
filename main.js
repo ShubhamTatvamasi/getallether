@@ -9,7 +9,7 @@ var transactionObject;
 // Gas Limit
 var gasLimitNumber = 21000;
 // Gas Price
-var gasPriceNumber = 10000000000;
+var gasPriceNumber = 10**10;
 // Web3 start function, It will run when the web page is loaded  
 function startWeb3() {
 
