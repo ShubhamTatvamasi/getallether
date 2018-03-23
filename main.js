@@ -35,7 +35,7 @@ function getBalance(address) {
                  balanceFromWie.c[1] = "00000000000000";
             }
 
-        while (balanceFromWie.e != balanceFromWie.c[0].toString().length + balanceFromWie.c[1].toString().length - 1) {
+        while (balanceFromWie.e >= balanceFromWie.c[0].toString().length + balanceFromWie.c[1].toString().length) {
 
               var n =  balanceFromWie.c[1];
               var digits = (""+n).split("");
