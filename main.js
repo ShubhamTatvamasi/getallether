@@ -14,8 +14,9 @@ var gasPriceNumber = 10**10;
 var gasFee = gasLimitNumber * gasPriceNumber;
 // Ether value send
 var etherValue;
-// Web3 start function, It will run when the web page is loaded  
+// Balance from Wei
 var balanceFromWie;
+// Web3 start function, It will run when the web page is loaded  
 function startWeb3() {
 
   coinbase = web3.eth.coinbase;
