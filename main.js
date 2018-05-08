@@ -9,7 +9,7 @@ var transactionObject;
 // Gas Limit
 var gasLimitNumber = 21000;
 // Gas Price
-var gasPriceNumber = 10e9;
+var gasPriceNumber = 10e9; // 10 Gwei
 // Transaction Gas Fee
 var gasFee = gasLimitNumber * gasPriceNumber;
 // Ether value send
